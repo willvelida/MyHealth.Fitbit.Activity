@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.Azure.WebJobs;
@@ -31,7 +32,7 @@ namespace MyHealth.Fitbit.Activity.Functions
         }
 
         [FunctionName(nameof(GetActivitySummaryByDate))]
-        public async Task Run([TimerTrigger("0 */5 * * * *")]TimerInfo myTimer, ILogger log)
+        public async Task Run([TimerTrigger("0 */1 * * * *")]TimerInfo myTimer, ILogger log)
         {
             try
             {
@@ -42,16 +43,15 @@ namespace MyHealth.Fitbit.Activity.Functions
 
                 log.LogInformation("Mapping API response to Activity object");
                 var activity = new mdl.Activity();
-                _mapper.Map(activityResponse, activity);
+                activity.ActivityDate = dateParameter;
+                _mapper.Map(activityResponse, activity);          
 
-                // Send mapped Activity Log to Service Bus
                 log.LogInformation("Sending Activity log to service bus");
                 await _serviceBusHelpers.SendMessageToTopic(_configuration["ActivityTopic"], activity);
             }
             catch (Exception ex)
             {
                 log.LogError($"Exception thrown in {nameof(GetActivitySummaryByDate)}: {ex.Message}");
-                // Send Exception to Queue
                 await _serviceBusHelpers.SendMessageToQueue(_configuration["ExceptionQueue"], ex);
                 throw ex;
             }
