@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace MyHealth.Fitbit.Activity.Models
 {
+    [ExcludeFromCodeCoverage]
     public class ActivityResponseObject
     {
         public List<object> activities { get; set; }

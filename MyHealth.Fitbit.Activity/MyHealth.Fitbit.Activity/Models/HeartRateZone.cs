@@ -1,5 +1,8 @@
-﻿namespace MyHealth.Fitbit.Activity.Models
+﻿using System.Diagnostics.CodeAnalysis;
+
+namespace MyHealth.Fitbit.Activity.Models
 {
+    [ExcludeFromCodeCoverage]
     public class HeartRateZone
     {
         public double caloriesOut { get; set; }

@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 
 namespace MyHealth.Fitbit.Activity.Models
 {
+    [ExcludeFromCodeCoverage]
     public class Summary
     {
         public int activeScore { get; set; }

@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace MyHealth.Fitbit.Activity.Models
 {
+    [ExcludeFromCodeCoverage]
     public class Activity
     {
         public int activityId { get; set; }
