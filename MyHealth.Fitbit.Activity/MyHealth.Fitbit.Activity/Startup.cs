@@ -5,9 +5,7 @@ using MyHealth.Common;
 using MyHealth.Fitbit.Activity;
 using MyHealth.Fitbit.Activity.Services;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Text;
 
 [assembly: FunctionsStartup(typeof(Startup))]
 namespace MyHealth.Fitbit.Activity
@@ -35,7 +33,7 @@ namespace MyHealth.Fitbit.Activity
             builder.Services.AddSingleton<IKeyVaultHelper>(sp =>
             {
                 IConfiguration configuration = sp.GetService<IConfiguration>();
-                return new KeyVaultHelper(configuration["KeyVaultName"], configuration["tenantId"], configuration["clientId"], configuration["clientSecret"]);
+                return new KeyVaultHelper(configuration["KeyVaultName"]);
             });
             builder.Services.AddScoped<IFitbitApiService, FitbitApiService>();
         }

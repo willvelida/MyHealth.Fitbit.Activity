@@ -1,10 +1,7 @@
 ﻿using AutoMapper;
 using MyHealth.Fitbit.Activity.Models;
-using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using System.Text;
 using mdl = MyHealth.Common.Models;
 
 namespace MyHealth.Fitbit.Activity.Profiles
@@ -41,7 +38,7 @@ namespace MyHealth.Fitbit.Activity.Profiles
                     opt => opt.MapFrom(src => src.summary.veryActiveMinutes))
                 .ForMember(
                     dest => dest.ActivityCalories,
-                    opt => opt.MapFrom(src => src.summary.activityCalories));        
+                    opt => opt.MapFrom(src => src.summary.activityCalories));
         }
     }
 }

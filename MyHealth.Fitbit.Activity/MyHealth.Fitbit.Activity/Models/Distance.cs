@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace MyHealth.Fitbit.Activity.Models
+﻿namespace MyHealth.Fitbit.Activity.Models
 {
     public class Distance
     {

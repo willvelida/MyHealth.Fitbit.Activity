@@ -1,13 +1,11 @@
-using System;
-using System.Linq;
-using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.Azure.WebJobs;
-using Microsoft.Azure.WebJobs.Host;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using MyHealth.Common;
 using MyHealth.Fitbit.Activity.Services;
+using System;
+using System.Threading.Tasks;
 using mdl = MyHealth.Common.Models;
 
 namespace MyHealth.Fitbit.Activity.Functions
@@ -32,7 +30,7 @@ namespace MyHealth.Fitbit.Activity.Functions
         }
 
         [FunctionName(nameof(GetActivitySummaryByDate))]
-        public async Task Run([TimerTrigger("0 */1 * * * *")]TimerInfo myTimer, ILogger log)
+        public async Task Run([TimerTrigger("0 15 5 * * *")] TimerInfo myTimer, ILogger log)
         {
             try
             {
@@ -44,7 +42,7 @@ namespace MyHealth.Fitbit.Activity.Functions
                 log.LogInformation("Mapping API response to Activity object");
                 var activity = new mdl.Activity();
                 activity.ActivityDate = dateParameter;
-                _mapper.Map(activityResponse, activity);          
+                _mapper.Map(activityResponse, activity);
 
                 log.LogInformation("Sending Activity log to service bus");
                 await _serviceBusHelpers.SendMessageToTopic(_configuration["ActivityTopic"], activity);
@@ -55,7 +53,7 @@ namespace MyHealth.Fitbit.Activity.Functions
                 await _serviceBusHelpers.SendMessageToQueue(_configuration["ExceptionQueue"], ex);
                 throw ex;
             }
-            
+
         }
     }
 }
